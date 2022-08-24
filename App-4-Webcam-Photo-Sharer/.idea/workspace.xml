@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="08f6c04b-263b-47f0-85c9-95fd3cc3acc4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/filesharer.py" beforeDir="false" afterPath="$PROJECT_DIR$/filesharer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend.kv" beforeDir="false" afterPath="$PROJECT_DIR$/frontend.kv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
