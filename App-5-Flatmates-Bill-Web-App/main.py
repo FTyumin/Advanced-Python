@@ -1,6 +1,7 @@
 from flask.views import MethodView
 from wtforms import Form, StringField, SubmitField
 from flask import Flask, render_template,request
+from flatmates_bill import flat
 
 app = Flask(__name__)
 
@@ -23,7 +24,19 @@ class ResultsPage(MethodView):
     def post(self):
         billform = BillForm(request.form)
         amount = billform.amount.data
-        return amount
+        period = billform.period.data
+
+        name1 = billform.name1.data
+        days_in_house1 = billform.days_in_house1.data
+
+        name2 = billform.name2.data
+        days_in_house2 = billform.days_in_house2.data
+
+        the_bill = flat.Bill(float(amount), period)
+        flatmate1 = flat.Flatmate(name1,float(days_in_house1))
+        flatmate2 = flat.Flatmate(name2, float(days_in_house2))
+
+        return f"{flatmate1.name} pays {flatmate1.pays(the_bill,flatmate2)}"
 
 
 class BillForm(Form):
