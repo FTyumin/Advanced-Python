@@ -36,20 +36,26 @@ class ResultsPage(MethodView):
         flatmate1 = flat.Flatmate(name1,float(days_in_house1))
         flatmate2 = flat.Flatmate(name2, float(days_in_house2))
 
-        return f"{flatmate1.name} pays {flatmate1.pays(the_bill,flatmate2)}"
+        #return f"{flatmate1.name} pays {round(flatmate1.pays(the_bill,flatmate2),2)}"
+        return render_template('results.html',
+                               name1 = flatmate1.name,
+                               amount1=round(flatmate1.pays(the_bill,flatmate2),2),
+                               name2 = flatmate2.name,
+                               amount2=round(flatmate2.pays(the_bill,flatmate2),2))
 
 
 class BillForm(Form):
-    amount = StringField("Bill Amount: ")
-    period = StringField("Bill Period: ")
+    amount = StringField("Bill Amount: ", default="100")
+    period = StringField("Bill Period: ", default="August 2022")
 
-    name1 = StringField("Name: ")
-    days_in_house1 = StringField("Days in the house")
+    name1 = StringField("Name: ", default="John")
+    days_in_house1 = StringField("Days in the house", default=25)
 
-    name2 = StringField("Name: ")
-    days_in_house2 = StringField("Days in the house")
+    name2 = StringField("Name: ", default="Bob")
+    days_in_house2 = StringField("Days in the house", default=14)
 
     button = SubmitField("Calculate")
+
 
 app.add_url_rule('/',
                  view_func=HomePage.as_view('home_page'))
