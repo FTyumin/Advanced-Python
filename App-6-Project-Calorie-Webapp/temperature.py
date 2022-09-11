@@ -27,4 +27,10 @@ class Temperature:
 
 
     def get(self):
-        pass
+
+        scraped_content = self.scrape()
+        return float(scraped_content['temp'].replace("C","").strip())
+
+if __name__=="__main__":
+    temperature = Temperature(country="usa", city = "san francisco")
+    print(temperature.get())
