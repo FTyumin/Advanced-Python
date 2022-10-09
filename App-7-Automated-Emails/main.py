@@ -12,11 +12,17 @@ class NewsFeed:
         pass
 
 url = "https://newsapi.org/v2/everything?" \
-      "q=andrewtate&" \
+      "q=putin&" \
       "from=2022-09-10&" \
       "language=en" \
       "&apiKey=f450b62759394d49a40a076cd24f1406"
 response = requests.get(url)
 content = response.json()
-x = content['articles'][1]['title']
-pprint(content)
+articles = content['articles']
+
+
+email_body = ''
+for article in articles:
+    email_body = email_body + article['title'] + "\n" + article['url'] + "\n\n"
+
+print(email_body)
