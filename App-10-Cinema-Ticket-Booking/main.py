@@ -13,7 +13,7 @@ class User:
         if seat.is_free():
             if card.validate(price=seat.get_price()):
                 seat.occupy()
-                ticket = Ticket(user= self, price=seat.get_price(), seat_number=seat_id)
+                ticket = Ticket(user=self, price=seat.get_price(), seat_number=seat_id)
                 ticket.to_pdf()
                 return "Purchase successful"
             else:
@@ -22,17 +22,11 @@ class User:
             return "Seat is taken"
 
 
-
-
 class Seat:
+    database = "cinema.db"
 
-    database= "cinema.db"
-
-
-
-    def __init__(self,seat_id):
+    def __init__(self, seat_id):
         self.seat_id = seat_id
-
 
     def get_price(self):
         connection = sqlite3.connect("cinema.db")
@@ -66,9 +60,7 @@ class Seat:
             connection.close()
 
 
-
 class Card:
-
     database = "banking.db"
 
     def __init__(self, type, number, cvc, holder):
@@ -77,7 +69,7 @@ class Card:
         self.cvc = cvc
         self.holder = holder
 
-    def validate(self,price):
+    def validate(self, price):
         connection = sqlite3.connect(self.database)
         cursor = connection.cursor()
         cursor.execute("""
@@ -90,7 +82,7 @@ class Card:
             if balance >= price:
                 connection.execute("""
                 UPDATE "Card" SET "balance" = ? WHERE "number"=? and "cvc"=?
-                """, [balance-price, self.number, self.cvc])
+                """, [balance - price, self.number, self.cvc])
                 connection.commit()
                 connection.close()
                 return True
@@ -98,7 +90,7 @@ class Card:
 
 class Ticket:
 
-    def  __init__(self, user, price, seat_number):
+    def __init__(self, user, price, seat_number):
         self.user = user
         self.price = price
         self.id = "".join([random.choice(string.ascii_letters) for i in range(8)])
@@ -108,7 +100,7 @@ class Ticket:
         pdf = FPDF(orientation='P', unit='pt', format='A4')
         pdf.add_page()
 
-        pdf.set_font(family="Times", style="B", size = 24)
+        pdf.set_font(family="Times", style="B", size=24)
         pdf.cell(w=0, h=80, txt="Your Digital Ticker", border=1, ln=1, align="C")
 
         pdf.set_font(family="Times", style="B", size=14)
@@ -135,11 +127,11 @@ class Ticket:
         pdf.cell(w=0, h=25, txt=str(self.seat_number), border=1, ln=1)
         pdf.cell(w=0, h=5, txt="", border=0, ln=1)
 
-        pdf.output("sample.pdf",'F')
+        pdf.output("sample.pdf", 'F')
 
-if __name__=="__main__":
 
-    name  = input("Your name: ")
+if __name__ == "__main__":
+    name = input("Your name: ")
     seat_id = input("Seat number: ")
     card_type = input("Your card type: ")
     card_number = input("Your card number: ")
@@ -148,12 +140,6 @@ if __name__=="__main__":
 
     user = User(name=name)
     seat = Seat(seat_id=seat_id)
-    card = Card(type=card_type, number = card_number, cvc=card_cvc, holder=card_holder)
+    card = Card(type=card_type, number=card_number, cvc=card_cvc, holder=card_holder)
 
     print(user.buy(seat=seat, card=card))
-
-
-
-
-
-
